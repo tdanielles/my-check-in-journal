@@ -16,7 +16,6 @@ journaling app with Java.
 
 ## User Stories
 - As a user, I want to be able to add a new entry to the journal.
-- As a user, I want to be able to edit an existing entry in the journal.
 - As a user, I want to be able to delete an existing entry in the journal.
 - As a user, I want to be able to select an entry from the journal and view it
     in detail.
