@@ -9,6 +9,7 @@ public class MyJournalTest {
     private Entry first;
     private Entry second;
     private Entry third;
+    private Entry testEntry;
     private MyJournal testJournal;
 
     @BeforeEach
@@ -16,6 +17,8 @@ public class MyJournalTest {
         first = new Entry("My first entry", "I'm so happy!", "October 1, 2022");
         second = new Entry("My second entry", "I'm so sad.", "October 2, 2022");
         third = new Entry("My third entry", "I feel awesome!", "October 3, 2022");
+        testEntry = new Entry("My first entry", "Hi", "Bye");
+
         testJournal = new MyJournal();
     }
 
@@ -34,23 +37,24 @@ public class MyJournalTest {
 
     @Test
     void testAddEntry() {
-        testJournal.addEntry(first);
+        assertTrue(testJournal.addEntry(first));
         assertEquals(1, testJournal.getNumEntries());
-        testJournal.addEntry(second);
-        assertEquals(2, testJournal.getNumEntries());
+
+        assertFalse(testJournal.addEntry(testEntry));
+        assertEquals(1, testJournal.getNumEntries());
     }
 
     @Test
     void testDeleteEntry() {
-        testJournal.addEntry(first);
-        testJournal.addEntry(second);
+        assertTrue(testJournal.addEntry(first));
+        assertTrue(testJournal.addEntry(second));
 
-        assertFalse(testJournal.deleteEntry(third));
+        assertFalse(testJournal.deleteEntry("My third entry"));
 
-        assertTrue(testJournal.deleteEntry(first));
+        assertTrue(testJournal.deleteEntry("My first entry"));
         assertEquals(1, testJournal.getNumEntries());
 
-        assertTrue(testJournal.deleteEntry(second));
+        assertTrue(testJournal.deleteEntry("My second entry"));
         assertEquals(0, testJournal.getNumEntries());
     }
 }

@@ -6,7 +6,6 @@ public class Entry {
     private String content;
     private String date;
 
-    // REQUIRES: Title, content, and date to have non-zero lengths
     // EFFECTS: Creates a new entry
     public Entry(String title, String content, String date) {
         this.title = title;
@@ -14,14 +13,17 @@ public class Entry {
         this.date = date;
     }
 
+    // EFFECTS: Returns the title of the entry
     public String getTitle() {
         return this.title;
     }
 
+    // EFFECTS: Returns the formatted title and date of the entry
     public String getTitleAndDate() {
         return this.title + " (" + this.date + ")";
     }
 
+    // EFFECTS: Returns the whole entry formatted
     public String getEntry() {
         return this.title + " (" + this.date + ")\n" + this.content;
     }
