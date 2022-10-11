@@ -66,6 +66,10 @@ public class MyJournalTest {
 
         testJournal.addEntry(first);
         assertEquals(first, testJournal.getSpecificEntry("My first entry"));
+
+        testJournal.addEntry(second);
+        testJournal.addEntry(third);
+        assertEquals(third, testJournal.getSpecificEntry("My third entry"));
     }
 
     @Test
