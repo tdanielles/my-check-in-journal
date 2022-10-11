@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MyJournalTest {
@@ -56,5 +58,28 @@ public class MyJournalTest {
 
         assertTrue(testJournal.deleteEntry("My second entry"));
         assertEquals(0, testJournal.getNumEntries());
+    }
+
+    @Test
+    void testGetSpecificEntry() {
+        assertEquals(null, testJournal.getSpecificEntry("Title that's not in journal"));
+
+        testJournal.addEntry(first);
+        assertEquals(first, testJournal.getSpecificEntry("My first entry"));
+    }
+
+    @Test
+    void testGetAllEntries() {
+        ArrayList<Entry> sampleJournal = new ArrayList<>();
+
+        assertEquals(sampleJournal, testJournal.getAllEntries());
+
+        sampleJournal.add(first);
+        assertTrue(testJournal.addEntry(first));
+        assertEquals(sampleJournal, testJournal.getAllEntries());
+
+        sampleJournal.add(second);
+        assertTrue(testJournal.addEntry(second));
+        assertEquals(sampleJournal, testJournal.getAllEntries());
     }
 }

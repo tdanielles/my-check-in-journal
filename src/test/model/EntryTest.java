@@ -17,6 +17,7 @@ class EntryTest {
     void testConstructor() {
         assertEquals("A Test Entry", testEntry.getTitle());
         assertEquals("A Test Entry (October 11, 2022)\nI'm testing my program!", testEntry.getEntry());
+        assertEquals("A Test Entry (October 11, 2022)", testEntry.getTitleAndDate());
     }
 
 }
