@@ -6,6 +6,7 @@ public class Entry {
     private String content;
     private String date;
 
+    // REQUIRES: title, content, and date to have non-zero lengths
     // EFFECTS: Creates a new entry
     public Entry(String title, String content, String date) {
         this.title = title;

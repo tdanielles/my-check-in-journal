@@ -15,7 +15,7 @@ public class MyJournalTest {
     private MyJournal testJournal;
 
     @BeforeEach
-    void runBefore() {
+    public void runBefore() {
         first = new Entry("My first entry", "I'm so happy!", "October 1, 2022");
         second = new Entry("My second entry", "I'm so sad.", "October 2, 2022");
         third = new Entry("My third entry", "I feel awesome!", "October 3, 2022");
@@ -25,12 +25,12 @@ public class MyJournalTest {
     }
 
     @Test
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(0, testJournal.getNumEntries());
     }
 
     @Test
-    void testGetNumEntries() {
+    public void testGetNumEntries() {
         testJournal.addEntry(first);
         assertEquals(1, testJournal.getNumEntries());
         testJournal.addEntry(second);
@@ -38,7 +38,7 @@ public class MyJournalTest {
     }
 
     @Test
-    void testAddEntry() {
+    public void testAddEntry() {
         assertTrue(testJournal.addEntry(first));
         assertEquals(1, testJournal.getNumEntries());
 
@@ -47,7 +47,7 @@ public class MyJournalTest {
     }
 
     @Test
-    void testDeleteEntry() {
+    public void testDeleteEntry() {
         assertTrue(testJournal.addEntry(first));
         assertTrue(testJournal.addEntry(second));
 
@@ -61,7 +61,7 @@ public class MyJournalTest {
     }
 
     @Test
-    void testGetSpecificEntry() {
+    public void testGetSpecificEntry() {
         assertEquals(null, testJournal.getSpecificEntry("Title that's not in journal"));
 
         testJournal.addEntry(first);
@@ -73,7 +73,7 @@ public class MyJournalTest {
     }
 
     @Test
-    void testGetAllEntries() {
+    public void testGetAllEntries() {
         ArrayList<Entry> sampleJournal = new ArrayList<>();
 
         assertEquals(sampleJournal, testJournal.getAllEntries());

@@ -12,7 +12,7 @@ public class MyJournal {
     }
 
     // MODIFIES: this
-    // EFFECTS: Adds an entry to the journal if title is not in journal
+    // EFFECTS: Adds an entry to the journal if title is not in journal; otherwise, return false
     public boolean addEntry(Entry e) {
         for (Entry e1 : this.journal) {
             if (e1.getTitle().equals(e.getTitle())) {
@@ -24,7 +24,8 @@ public class MyJournal {
     }
 
     // MODIFIES: this
-    // EFFECTS: Removes the entry from the journal if it is in the journal
+    // EFFECTS: Removes the entry from the journal if it is in the journal and return true;
+    // otherwise, do nothing and return false
     public boolean deleteEntry(String title) {
         for (Entry e : this.journal) {
             if (e.getTitle().equals(title)) {
@@ -35,7 +36,7 @@ public class MyJournal {
         return false;
     }
 
-    // EFFECTS: Returns an Entry object from the journal given the title; otherwise, returns null
+    // EFFECTS: Returns an Entry object from the journal given the title; otherwise, return null
     public Entry getSpecificEntry(String title) {
         for (Entry e : this.journal) {
             if (e.getTitle().equals(title)) {

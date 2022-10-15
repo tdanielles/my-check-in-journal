@@ -9,12 +9,12 @@ class EntryTest {
     private Entry testEntry;
 
     @BeforeEach
-    void runBefore() {
+    public void runBefore() {
         testEntry = new Entry("A Test Entry", "I'm testing my program!", "October 11, 2022");
     }
 
     @Test
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals("A Test Entry", testEntry.getTitle());
         assertEquals("A Test Entry (October 11, 2022)\nI'm testing my program!", testEntry.getEntry());
         assertEquals("A Test Entry (October 11, 2022)", testEntry.getTitleAndDate());
