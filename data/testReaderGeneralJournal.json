@@ -1,0 +1,14 @@
+{
+  "entries": [
+    {
+      "title": "First Entry",
+      "content": "This is my first entry. So exciting!",
+      "date": "October 25, 2022"
+    },
+    {
+      "title": "Second Entry",
+      "content": "This is my second entry. Whoo!",
+      "date": "October 26, 2022"
+    }
+  ]
+}
