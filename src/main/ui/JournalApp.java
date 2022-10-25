@@ -2,19 +2,29 @@ package ui;
 
 import model.Entry;
 import model.MyJournal;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // Journal application
 public class JournalApp {
-
+    private static final String JSON_STORE = "./data/journal.json";
     private MyJournal journal;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: Runs the journal application
-    public JournalApp() {
+    public JournalApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
         journal = new MyJournal();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+
         runJournal();
     }
 
@@ -52,6 +62,10 @@ public class JournalApp {
             doAddEntry();
         } else if (command.equals("d")) {
             doDeleteEntry();
+        } else if (command.equals("z")) {
+            doSaveEntry();
+        } else if (command.equals("l")) {
+            doLoadEntry();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -64,6 +78,8 @@ public class JournalApp {
         System.out.println("\ts -> view a specific entry in your journal");
         System.out.println("\ta -> add an entry to your journal");
         System.out.println("\td -> delete an entry from your journal");
+        System.out.println("\tz -> save your entries to file");
+        System.out.println("\tl -> load your entries from file");
         System.out.println("\tq -> exit the program");
     }
 
@@ -126,6 +142,29 @@ public class JournalApp {
             System.out.println("There is no entry in the journal with title, " + title + ".");
         } else {
             System.out.println("You have successfully deleted an entry!");
+        }
+    }
+
+    // EFFECTS: saves keychain to file
+    private void doSaveEntry() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(journal);
+            jsonWriter.close();
+            System.out.println("Successfully saved journal to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads the journal from file
+    private void doLoadEntry() {
+        try {
+            journal = jsonReader.read();
+            System.out.println("Loaded your entries from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

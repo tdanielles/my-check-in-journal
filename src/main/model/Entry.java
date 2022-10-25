@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents a journal entry having a title, content, and date
-public class Entry {
+public class Entry implements Writable {
     private String title;
     private String content;
     private String date;
@@ -27,5 +30,14 @@ public class Entry {
     // EFFECTS: Returns the whole entry formatted
     public String getEntry() {
         return this.title + " (" + this.date + ")\n" + this.content;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("content", content);
+        json.put("date", date);
+        return json;
     }
 }
