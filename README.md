@@ -21,3 +21,5 @@ journaling app with Java.
     in detail.
 - As a user, I want to view a list of all the titles of the entries I have in the
 journal.
+- As a user, I want to be able to save my journal to file.
+- As a user, I want to be able to load my journal from file.
