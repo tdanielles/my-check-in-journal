@@ -50,9 +50,7 @@ public class JournalAppGUI extends JFrame {
     private static final int PADDING = 40;
 
     private static final Color DARK_BLUE = new Color(32, 88, 144);
-    private static final Color LIGHT_BLUE = new Color(134, 203, 223);
     private static final Color WHITE = new Color(255, 255, 255);
-    private static final Color GRAY = new Color(171, 171, 171);
 
     // Creates the GUI for the JournalApp
     public JournalAppGUI() {
@@ -167,6 +165,7 @@ public class JournalAppGUI extends JFrame {
     // EFFECTS: renders the "Your entries" JLabel
     private void renderEntriesLabel() {
         JLabel yourCardsLabel = new JLabel("Your entries");
+        yourCardsLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         yourCardsLabel.setHorizontalAlignment(JLabel.LEFT);
         yourCardsLabel.setVerticalAlignment(JLabel.BOTTOM);
         menuPanel.add(yourCardsLabel);
@@ -244,7 +243,7 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: renders the folder panel to display all the flashcards
+    // EFFECTS: renders the entry panel to display all entries
     private void renderEntryPanel() {
         entryPanel = new JPanel(new GridLayout(0, 5, 25, 20));
         entryPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -255,7 +254,7 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: renders each flashcard added to the folder object
+    // EFFECTS: renders each entry added to the journal
     private void renderEntryPanels(JPanel panel) {
         ArrayList<Entry> entries = myJournal.getAllEntries();
 
@@ -333,6 +332,8 @@ public class JournalAppGUI extends JFrame {
         renderSeeMoreWindow(seeMoreWindow, entry);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the JWindow properties of the see more pop-up
     private JWindow initializeSeeMoreWindow() {
         seeMoreWindow = new JWindow(this);
         seeMoreWindow.setFocusable(true);
@@ -342,6 +343,8 @@ public class JournalAppGUI extends JFrame {
         return seeMoreWindow;
     }
 
+    // MODIFIES: this
+    // EFFECTS: renders the JWindow for the see more window
     private void renderSeeMoreWindow(JWindow window, Entry entry) {
         JPanel entrySeeMorePanel = initializeSeeMoreEntryPanel();
         renderSeeMoreEntryPanelInfo(entrySeeMorePanel, entry);
@@ -349,6 +352,8 @@ public class JournalAppGUI extends JFrame {
         window.add(entrySeeMorePanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the JPanel's properties for the see more pop-up
     private JPanel initializeSeeMoreEntryPanel() {
         JPanel formPanel = new JPanel(new GridLayout(3, 2, 0, 0));
         formPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -358,6 +363,8 @@ public class JournalAppGUI extends JFrame {
         return formPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: renders the text fields for the see more pop-up
     private void renderSeeMoreEntryPanelInfo(JPanel entrySeeMorePanel, Entry entry) {
         JLabel titleLbl = new JLabel(entry.getTitleAndDate());
         entrySeeMorePanel.add(titleLbl);
@@ -370,6 +377,8 @@ public class JournalAppGUI extends JFrame {
         entrySeeMorePanel.add(new JScrollPane(contentLbl));
     }
 
+    // MODIFIES: this
+    // EFFECTS: renders the back button for the see more pop-up
     private void renderSeeMoreEntryPanelButtons(JPanel seeMorePanel) {
         backBtn = new JButton("Back");
         backBtn.addActionListener(new ActionListener() {
@@ -383,6 +392,8 @@ public class JournalAppGUI extends JFrame {
         seeMorePanel.add(backBtn);
     }
 
+    // MODIFIES: this
+    // EFFECTS: renders the new entry button and activates its event listener
     private void renderAddBtn() {
         JPanel addBtnPanel = new JPanel();
         addBtn = new JButton("New entry");
@@ -420,14 +431,14 @@ public class JournalAppGUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: renders the JWindow for the entry input form
     private void renderAddEntryFormWindow(JWindow window) {
-        JPanel flashcardInputFormPanel = initializeAddEntryFormPanel();
-        renderAddEntryFormPanelInputs(flashcardInputFormPanel);
-        renderAddEntryFormPanelButtons(flashcardInputFormPanel);
-        window.add(flashcardInputFormPanel);
+        JPanel addEntryFormPanel = initializeAddEntryFormPanel();
+        renderAddEntryFormPanelInputs(addEntryFormPanel);
+        renderAddEntryFormPanelButtons(addEntryFormPanel);
+        window.add(addEntryFormPanel);
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the JPanel's properties for the flashcard input form
+    // EFFECTS: initializes the JPanel's properties for the journal input form
     private JPanel initializeAddEntryFormPanel() {
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 40, 40));
         formPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -438,15 +449,15 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: renders the JButtons for the flashcard input form
+    // EFFECTS: renders the JButtons for the entry input form
     private void renderAddEntryFormPanelButtons(JPanel addEntryFormPanel) {
         renderAddEntryFormPanelCancelBtn(addEntryFormPanel);
         renderAddEntryFormPanelConfirmBtn(addEntryFormPanel);
     }
 
     // MODIFIES: this
-    // EFFECTS: renders the confirm button for the flashcard input form
-    private void renderAddEntryFormPanelConfirmBtn(JPanel flashcardInputFormPanel) {
+    // EFFECTS: renders the confirm button for the entry input form
+    private void renderAddEntryFormPanelConfirmBtn(JPanel addEntryFormPanel) {
         confirmBtn = new JButton("Add");
         confirmBtn.addActionListener(new ActionListener() {
 
@@ -463,12 +474,12 @@ public class JournalAppGUI extends JFrame {
                 }
             }
         });
-        flashcardInputFormPanel.add(confirmBtn);
+        addEntryFormPanel.add(confirmBtn);
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a new flashcard with user input, throws IllegalInputException
-    // if phraseInput or translationInput are left blank
+    // EFFECTS: creates a new entry with user input, throws IllegalInputException
+    // if title, date, or content are blank
     private void processUserInput() throws IllegalInputException {
         String title = titleInput.getText();
         String date = dateInput.getText();
@@ -489,7 +500,7 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: renders the cancel button for the flashcard input form
+    // EFFECTS: renders the cancel button for the entry input form
     private void renderAddEntryFormPanelCancelBtn(JPanel addEntryFormPanel) {
         cancelBtn = new JButton("Cancel");
         cancelBtn.addActionListener(new ActionListener() {
@@ -503,7 +514,7 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: renders the input fields for the flashcard input form
+    // EFFECTS: renders the input fields for the entry input form
     private void renderAddEntryFormPanelInputs(JPanel addEntryFormPanel) {
         JLabel titleLbl = new JLabel("Title: ");
         addEntryFormPanel.add(titleLbl);
