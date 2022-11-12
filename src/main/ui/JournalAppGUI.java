@@ -29,12 +29,11 @@ public class JournalAppGUI extends JFrame {
     private JButton loadBtn;
     private JPanel entryPanel;
     private JButton addBtn;
-
     private JWindow addEntryFormWindow;
     private JWindow seeMoreWindow;
     private JTextField titleInput;
     private JTextField dateInput;
-    private JTextField contentInput;
+    private JTextArea contentInput;
     private JButton cancelBtn;
     private JButton confirmBtn;
     private JButton backBtn;
@@ -90,7 +89,7 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a JProgressBar representing the application loading
+    // EFFECTS: adds a JProgressBar to show the application's loading progress
     // SOURCE: https://www.youtube.com/watch?v=pNup-WzHwRs
     private void addProgressBar(JWindow loadingScreen) {
         UIManager.put("ProgressBar.background", Color.white);
@@ -104,26 +103,23 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a timer to keep track of the loading time and when to switch to the home page
+    // EFFECTS: adds a timer to keep track of the loading time and when to switch to the main page
     // SOURCE: https://www.youtube.com/watch?v=pNup-WzHwRs
     private void addTimer(JWindow loadingScreen, JProgressBar progress) {
-        timer = new Timer(100, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int x = progress.getValue();
-                if (x == 100) {
-                    loadingScreen.dispose();
-                    JournalAppGUI.this.setVisible(true);
-                    timer.stop();
-                } else {
-                    progress.setValue(x + 4);
-                }
+        timer = new Timer(100, e -> {
+            int x = progress.getValue();
+            if (x == 100) {
+                loadingScreen.dispose();
+                JournalAppGUI.this.setVisible(true);
+                timer.stop();
+            } else {
+                progress.setValue(x + 4);
             }
         });
     }
 
     // MODIFIES: this
-    // EFFECTS: renders the main home page for the app with new instances of all of its panels
+    // EFFECTS: renders the main home page for the app
     private void renderMainPage() {
         getContentPane().removeAll();
         getContentPane().revalidate();
@@ -136,7 +132,7 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: renders the title on the home page
+    // EFFECTS: renders the title on the main page
     private void renderTitle() {
         JPanel titlePanel = new JPanel();
         titlePanel.setBackground(DARK_BLUE);
@@ -172,7 +168,7 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: renders the save and load panel
+    // EFFECTS: renders the save and load panel with corresponding buttons
     private void renderSaveLoadPanel() {
         saveLoadPanel = new JPanel(new GridLayout(1, 2, 0, 0));
         saveLoadPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -186,12 +182,9 @@ public class JournalAppGUI extends JFrame {
     private void renderLoadButton() {
         JPanel loadBtnPanel = new JPanel();
         loadBtn = new JButton("Load entries");
-        loadBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doLoadFolder();
-                renderMainPage();
-            }
+        loadBtn.addActionListener(e -> {
+            doLoadJournal();
+            renderMainPage();
         });
         loadBtn.setHorizontalAlignment(JButton.CENTER);
         loadBtn.setVerticalAlignment(JButton.CENTER);
@@ -201,9 +194,9 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads folder from file
-    // SOURCE https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-    private void doLoadFolder() {
+    // EFFECTS: loads journal entries from file
+    // SOURCE: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+    private void doLoadJournal() {
         try {
             this.myJournal = jsonReader.read();
         } catch (IOException e) {
@@ -216,12 +209,9 @@ public class JournalAppGUI extends JFrame {
     private void renderSaveButton() {
         JPanel saveBtnPanel = new JPanel();
         saveBtn = new JButton("Save activities");
-        saveBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doSaveFolder();
-                renderMainPage();
-            }
+        saveBtn.addActionListener(e -> {
+            doSaveEntries();
+            renderMainPage();
         });
         saveBtn.setHorizontalAlignment(JButton.CENTER);
         saveBtn.setVerticalAlignment(JButton.CENTER);
@@ -230,9 +220,9 @@ public class JournalAppGUI extends JFrame {
         saveLoadPanel.add(saveBtnPanel);
     }
 
-    // EFFECTS: saves the folder to file
-    // SOURCE https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-    private void doSaveFolder() {
+    // EFFECTS: saves the journal entries to file
+    // SOURCE: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+    private void doSaveEntries() {
         try {
             jsonWriter.open();
             jsonWriter.write(this.myJournal);
@@ -298,12 +288,9 @@ public class JournalAppGUI extends JFrame {
         removeBtnPanel.setBackground(DARK_BLUE);
         removeBtn = new JButton("Remove entry");
         removeBtnPanel.add(removeBtn);
-        removeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myJournal.deleteEntry(entry.getTitle());
-                renderMainPage();
-            }
+        removeBtn.addActionListener(e -> {
+            myJournal.deleteEntry(entry.getTitle());
+            renderMainPage();
         });
         entryPanel.add(removeBtnPanel);
     }
@@ -316,12 +303,7 @@ public class JournalAppGUI extends JFrame {
         seeMoreBtnPanel.setBackground(DARK_BLUE);
         seeMoreBtn = new JButton("See more");
         seeMoreBtnPanel.add(seeMoreBtn);
-        seeMoreBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                renderSeeMorePopUp(entry);
-            }
-        });
+        seeMoreBtn.addActionListener(e -> renderSeeMorePopUp(entry));
         entryPanel.add(seeMoreBtnPanel);
     }
 
@@ -381,12 +363,9 @@ public class JournalAppGUI extends JFrame {
     // EFFECTS: renders the back button for the see more pop-up
     private void renderSeeMoreEntryPanelButtons(JPanel seeMorePanel) {
         backBtn = new JButton("Back");
-        backBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                seeMoreWindow.dispose();
-                JournalAppGUI.this.setVisible(true);
-            }
+        backBtn.addActionListener(e -> {
+            seeMoreWindow.dispose();
+            JournalAppGUI.this.setVisible(true);
         });
         backBtn.setSize(new Dimension(50, 100));
         seeMorePanel.add(backBtn);
@@ -397,12 +376,7 @@ public class JournalAppGUI extends JFrame {
     private void renderAddBtn() {
         JPanel addBtnPanel = new JPanel();
         addBtn = new JButton("New entry");
-        addBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                renderAddEntryForm();
-            }
-        });
+        addBtn.addActionListener(e -> renderAddEntryForm());
         addBtn.setHorizontalAlignment(JButton.CENTER);
         addBtn.setVerticalAlignment(JButton.CENTER);
         addBtn.setPreferredSize(new Dimension(BTN_WIDTH, BTN_HEIGHT));
@@ -444,7 +418,7 @@ public class JournalAppGUI extends JFrame {
         formPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         addPadding(formPanel, 0, PADDING, 0, PADDING);
         formPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Add entry"));
+                BorderFactory.createEtchedBorder(), "New entry"));
         return formPanel;
     }
 
@@ -459,19 +433,15 @@ public class JournalAppGUI extends JFrame {
     // EFFECTS: renders the confirm button for the entry input form
     private void renderAddEntryFormPanelConfirmBtn(JPanel addEntryFormPanel) {
         confirmBtn = new JButton("Add");
-        confirmBtn.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    processUserInput();
-                    addEntryFormWindow.dispose();
-                    renderMainPage();
-                } catch (IllegalInputException ex) {
-                    JDialog dialog = new JDialog();
-                    dialog.setAlwaysOnTop(true);
-                    JOptionPane.showMessageDialog(dialog, "Please fill out all fields.");
-                }
+        confirmBtn.addActionListener(e -> {
+            try {
+                processUserInput();
+                addEntryFormWindow.dispose();
+                renderMainPage();
+            } catch (IllegalInputException ex) {
+                JDialog dialog = new JDialog();
+                dialog.setAlwaysOnTop(true);
+                JOptionPane.showMessageDialog(dialog, "Please fill out all fields.");
             }
         });
         addEntryFormPanel.add(confirmBtn);
@@ -503,12 +473,9 @@ public class JournalAppGUI extends JFrame {
     // EFFECTS: renders the cancel button for the entry input form
     private void renderAddEntryFormPanelCancelBtn(JPanel addEntryFormPanel) {
         cancelBtn = new JButton("Cancel");
-        cancelBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addEntryFormWindow.dispose();
-                JournalAppGUI.this.setVisible(true);
-            }
+        cancelBtn.addActionListener(e -> {
+            addEntryFormWindow.dispose();
+            JournalAppGUI.this.setVisible(true);
         });
         addEntryFormPanel.add(cancelBtn);
     }
@@ -531,8 +498,10 @@ public class JournalAppGUI extends JFrame {
         JLabel contentLbl = new JLabel("Content");
         addEntryFormPanel.add(contentLbl);
 
-        contentInput = new JTextField(20);
-        addEntryFormPanel.add(contentInput);
+        contentInput = new JTextArea(40,20);
+        contentInput.setLineWrap(true);
+        contentInput.setWrapStyleWord(true);
+        addEntryFormPanel.add(new JScrollPane(contentInput));
     }
 
     // MODIFIES: this
