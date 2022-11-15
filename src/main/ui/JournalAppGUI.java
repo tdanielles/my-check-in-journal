@@ -7,8 +7,6 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,9 +69,37 @@ public class JournalAppGUI extends JFrame {
     // SOURCE: https://www.youtube.com/watch?v=pNup-WzHwRs
     private void renderLoadingScreen() {
         final JWindow loadingScreenWindow = initializeLoadingScreenWindow();
+        JPanel imgPanel = renderImgPanel(loadingScreenWindow);
+        addImg(imgPanel);
         addProgressBar(loadingScreenWindow);
         addTimer(loadingScreenWindow, progress);
         timer.start();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: renders the image onto the loading screen window
+    // SOURCE: https://www.youtube.com/watch?v=pNup-WzHwRs
+    private JPanel renderImgPanel(JWindow loadingScreenWindow) {
+        JPanel imgPanel = new JPanel();
+        imgPanel.setBackground(Color.white);
+        imgPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        loadingScreenWindow.add(imgPanel);
+
+        return imgPanel;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds and adjusts the image onto the panel
+    // SOURCE: https://www.youtube.com/watch?v=pNup-WzHwRs
+    // IMG SOURCE: https://dribbble.com/shots/5331825-Loading-XXI
+    private void addImg(JPanel imgPanel) {
+        String imagePath = "data/loading.gif";
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(FRAME_WIDTH,
+                FRAME_HEIGHT,
+                Image.SCALE_DEFAULT));
+        JLabel imageLabel = new JLabel(imageIcon);
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imgPanel.add(imageLabel);
     }
 
     // MODIFIES: this
@@ -139,7 +165,7 @@ public class JournalAppGUI extends JFrame {
         addPadding(titlePanel, 40, 0, 0, 0);
         titleLbl = new JLabel("My Check-in App", JLabel.CENTER);
         titleLbl.setForeground(WHITE);
-        titleLbl.setFont(new Font("SansSerif", Font.BOLD, 40));
+        titleLbl.setFont(new Font("Georgia", Font.BOLD, 40));
         titlePanel.add(titleLbl);
         add(titlePanel);
     }
@@ -161,7 +187,7 @@ public class JournalAppGUI extends JFrame {
     // EFFECTS: renders the "Your entries" JLabel
     private void renderEntriesLabel() {
         JLabel yourCardsLabel = new JLabel("Your entries");
-        yourCardsLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        yourCardsLabel.setFont(new Font("Georgia", Font.BOLD, 16));
         yourCardsLabel.setHorizontalAlignment(JLabel.LEFT);
         yourCardsLabel.setVerticalAlignment(JLabel.BOTTOM);
         menuPanel.add(yourCardsLabel);
@@ -274,6 +300,7 @@ public class JournalAppGUI extends JFrame {
         entryLbl = new JLabel(entry.getTitle());
         entryLbl.setForeground(WHITE);
         entryLbl.setHorizontalAlignment(JLabel.CENTER);
+        entryLbl.setFont(new Font("Georgia", Font.BOLD, 14));
 
         entryPanel.add(entryLbl);
         renderEntryRemoveButton(entry, entryPanel);
@@ -349,6 +376,7 @@ public class JournalAppGUI extends JFrame {
     // EFFECTS: renders the text fields for the see more pop-up
     private void renderSeeMoreEntryPanelInfo(JPanel entrySeeMorePanel, Entry entry) {
         JLabel titleLbl = new JLabel(entry.getTitleAndDate());
+        titleLbl.setFont(new Font("Georgia", Font.BOLD, 14));
         entrySeeMorePanel.add(titleLbl);
 
         JTextArea contentLbl = new JTextArea();
@@ -356,6 +384,7 @@ public class JournalAppGUI extends JFrame {
         contentLbl.setEditable(false);
         contentLbl.setLineWrap(true);
         contentLbl.setWrapStyleWord(true);
+        contentLbl.setFont(new Font("Georgia", Font.PLAIN, 12));
         entrySeeMorePanel.add(new JScrollPane(contentLbl));
     }
 
