@@ -24,6 +24,8 @@ public class MyJournal implements Writable {
             }
         }
         this.entries.add(e);
+        String title = e.getTitle();
+        EventLog.getInstance().logEvent(new Event("Entry with title " + title + " added to journal!"));
         return true;
     }
 
@@ -31,12 +33,14 @@ public class MyJournal implements Writable {
     // EFFECTS: Removes the entry from the journal if it is in the journal and return true;
     // otherwise, do nothing and return false
     public boolean deleteEntry(String title) {
+        EventLog.getInstance().logEvent(new Event("Entry with title " + title + " deleted from journal!"));
         for (Entry e : this.entries) {
             if (e.getTitle().equals(title)) {
                 this.entries.remove(e);
                 return true;
             }
         }
+
         return false;
     }
 

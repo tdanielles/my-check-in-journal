@@ -1,12 +1,16 @@
 package ui;
 
 import model.Entry;
+import model.Event;
+import model.EventLog;
 import model.MyJournal;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +65,23 @@ public class JournalAppGUI extends JFrame {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
+        initializeQuitListener();
         renderMainPage();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if the user quits the main JFrame, prints out the EventLog in the console
+    // SOURCE: https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
+    private void initializeQuitListener() {
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event);
+                }
+                System.exit(0);
+            }
+        });
     }
 
     // MODIFIES: this

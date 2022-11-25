@@ -25,7 +25,6 @@ journal.
 - As a user, I want to be able to load my journal from file.
 
 ## Instructions for Grader
-
 - You can generate the first required event by clicking the "New entry" button and entering
 all required fields, and finally clicking the "Add" button. The new entry will then be displayed on the panel where 
 it says "Your entries". Note that for this action to be saved, you must click the "Save activities" button.
@@ -34,3 +33,15 @@ entry card you want to view in detail.
 - You can locate my visual component by running the JournalAppGUI class (loading screen).
 - You can save the state of my application by clicking the "Save activities" button.
 - You can reload the state of my application by clicking the "Load entries" button.
+
+## Phase 4: Task 2
+Thu Nov 24 18:03:37 PST 2022
+Entry with title Added #1 added to journal!
+Thu Nov 24 18:03:50 PST 2022
+Entry with title Added #2 added to journal!
+Thu Nov 24 18:04:04 PST 2022
+Entry with title Added #2 deleted from journal!
+Thu Nov 24 18:04:13 PST 2022
+Entry with title Added #3 added to journal!
+Thu Nov 24 18:04:18 PST 2022
+Entry with title Added #1 deleted from journal!
