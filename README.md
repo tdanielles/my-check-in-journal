@@ -54,6 +54,8 @@ Entry with title Added #3 added to journal!
 Thu Nov 24 18:04:18 PST 2022
 
 Entry with title Added #1 deleted from journal!
+- Note: When entries are loaded from the journal, the log will consider each entry in the journal as an entry added,
+which will reflect in the event log printed
 
 ## Phase 4: Task 3
 - separate the main method in JournalAppGUI.java to an actual Main.java class to reduce coupling and increase cohesion
