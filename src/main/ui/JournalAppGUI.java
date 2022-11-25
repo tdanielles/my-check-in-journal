@@ -497,8 +497,7 @@ public class JournalAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a new entry with user input, throws IllegalInputException
-    // if title, date, or content are blank
+    // EFFECTS: creates a new entry with user input, throws IllegalInputException if title, date, or content are blank
     private void processUserInput() throws IllegalInputException {
         String title = titleInput.getText();
         String date = dateInput.getText();
