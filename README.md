@@ -54,3 +54,9 @@ Entry with title Added #3 added to journal!
 Thu Nov 24 18:04:18 PST 2022
 
 Entry with title Added #1 deleted from journal!
+
+## Phase 4: Task 3
+- separate the main method in JournalAppGUI.java to an actual Main.java class to reduce coupling and increase cohesion
+- store entries in MyJournal using a hashset instead of an ArrayList so that duplicates do not need 
+to be checked, making the code more robust
+- ability to edit the entry after submission
