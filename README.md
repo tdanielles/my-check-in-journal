@@ -36,12 +36,21 @@ entry card you want to view in detail.
 
 ## Phase 4: Task 2
 Thu Nov 24 18:03:37 PST 2022
+
 Entry with title Added #1 added to journal!
+
 Thu Nov 24 18:03:50 PST 2022
+
 Entry with title Added #2 added to journal!
+
 Thu Nov 24 18:04:04 PST 2022
+
 Entry with title Added #2 deleted from journal!
+
 Thu Nov 24 18:04:13 PST 2022
+
 Entry with title Added #3 added to journal!
+
 Thu Nov 24 18:04:18 PST 2022
+
 Entry with title Added #1 deleted from journal!
