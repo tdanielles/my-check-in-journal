@@ -14,7 +14,7 @@ may make. Also, your journal may get in the hands of nosy siblings and
 relatives, with enough determination. Therefore, I want to create a digital
 journaling app with Java.
 
-## User Stories
+## User Stories 
 - As a user, I want to be able to add a new entry to the journal.
 - As a user, I want to be able to delete an existing entry in the journal.
 - As a user, I want to be able to select an entry from the journal and view it
