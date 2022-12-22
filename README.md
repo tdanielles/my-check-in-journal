@@ -10,9 +10,7 @@ Although writing by hand activates more parts of the brain than typing,
 there is the issue of productivity, convenience, and security. In our
 hectic world, time is of the essence. With a traditional paper
 journal, you'd take more time writing as well as fixing any mistakes you
-may make. Also, your journal may get in the hands of nosy siblings and
-relatives, with enough determination. Therefore, I want to create a digital
-journaling app with Java.
+may make.
 
 ## User Stories 
 - As a user, I want to be able to add a new entry to the journal.
